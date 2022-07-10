@@ -34,16 +34,16 @@ export const workloadReducer = (state: WorkloadsState = initialState, action: Wo
         },
       };
       
-      case getType(workloadActions.updateStatus):
-        return {
-          ...state,
-          [action.payload.id]: {
-            ...state[action.payload.id],
-            status: action.payload.status,
-          },
-        }
+    case getType(workloadActions.updateStatus):
+      return {
+        ...state,
+        [action.payload.id]: {
+          ...state[action.payload.id],
+          status: action.payload.status,
+        },
+      }
 
-      default:
-        return state;
+    default:
+      return state;
   }
 }

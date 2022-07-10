@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { RootAction, RootState } from '../../state';
 import { cancel } from '../../state/workloads/actions';
 import { WorkloadItem, WorkloadItemStateProps } from '../WorkloadItem';
-
+import './index.css';
 
 export interface WorkloadListStateProps {
   workloads: WorkloadItemStateProps[];
@@ -25,7 +25,7 @@ const WorkloadList: React.SFC<WorkloadListProps> = ({ workloads, cancelWorkload 
       <span>No workloads to display</span>
     )
   : (
-    <ol>
+    <ol className='workloadList-container'>
       {workloads.map((workload) => (
         <li key={workload.id}>
           <WorkloadItem {...workload} onCancel={() => cancelWorkload(workload.id)} />
