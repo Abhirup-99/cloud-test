@@ -35,6 +35,7 @@ export const cancelWorkload: AppEpic = (action$, state$) => (
     map(action => action.payload),
     mergeMap((payload) => from(workloadService.cancel(payload))),
     map(response => workloadsActions.updateStatus(response)),
+    catchError(error => of(console.log(error)).pipe(ignoreElements())),
   )
 );
 
