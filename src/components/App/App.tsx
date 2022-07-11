@@ -8,11 +8,13 @@ import './App.css';
 class App extends PureComponent {
   render() {
     return (
-      <div className='bg-zinc-50 h-screen'>
-        <header className='bg-indigo-600 px-4 py-4'>
+      <div className='bg-zinc-50 h-screen overflow-scroll'>
+        <header className='fixed inset-x-0 top-0 bg-indigo-600 px-4 py-4'>
           <h1 className='text-xl text-white font-bold'>CloudWork</h1>
         </header>
         
+        <div className='h-16'></div>
+
         <div >
           <WorkloadFormContainer />
         </div>

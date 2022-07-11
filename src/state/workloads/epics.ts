@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { combineEpics, Epic, ofType } from 'redux-observable';
 import { from, of, pipe, timer } from 'rxjs';
-import { filter, map, tap, ignoreElements, switchMap, delay, delayWhen, mergeMap, concatMap, takeUntil, takeWhile } from 'rxjs/operators';
+import { filter, map, tap, ignoreElements, switchMap, delay, delayWhen, mergeMap, concatMap, takeUntil, takeWhile, catchError } from 'rxjs/operators';
 import { action, isActionOf } from 'typesafe-actions';
 
 import { RootAction, RootState } from '../reducer';
@@ -21,7 +21,7 @@ const logWorkloadSubmissions: AppEpic = (action$, state$) => (
   )
 );
 
-const createWorkload: AppEpic = (action$, state$) => (
+export const createWorkload: AppEpic = (action$, state$) => (
   action$.pipe(
     filter(isActionOf(workloadsActions.submit)),
     mergeMap((action) => from(workloadService.create(action.payload))),
@@ -29,7 +29,7 @@ const createWorkload: AppEpic = (action$, state$) => (
   )
 );
 
-const cancelWorkload: AppEpic = (action$, state$) => (
+export const cancelWorkload: AppEpic = (action$, state$) => (
   action$.pipe(
     filter(isActionOf(workloadsActions.cancel)),
     map(action => action.payload),
@@ -38,11 +38,10 @@ const cancelWorkload: AppEpic = (action$, state$) => (
   )
 );
 
-const checkWorkloadStatus: AppEpic = (action$, state$) => (
+export const checkWorkloadStatus: AppEpic = (action$, state$) => (
   action$.pipe(
     filter(isActionOf(workloadsActions.created)),
     mergeMap(action => from(workloadService.checkStatus(action.payload)).pipe(
-      // delay(new Date(action.payload.completeDate).getTime() - Date.now() + 1000),
       delay(action.payload.completeDate),
       tap(response => console.log('workload status check', response)),
       map(response => workloadsActions.updateStatus(response)),
