@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { createEpicMiddleware } from 'redux-observable';
-import moment from 'moment';
 
 import { reducer, epics, RootAction, RootState } from './state';
 import * as WorkloadActions from './state/workloads/actions';
