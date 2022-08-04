@@ -44,6 +44,7 @@ export const checkWorkloadStatus: AppEpic = (action$, state$) => (
     filter(isActionOf(workloadsActions.created)),
     mergeMap(action => from(workloadService.checkStatus(action.payload)).pipe(
       delay(action.payload.completeDate),
+      delay(1000),
       tap(response => console.log('workload status check', response)),
       map(response => workloadsActions.updateStatus(response)),
       takeUntil(action$.pipe(
